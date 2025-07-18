@@ -15,7 +15,8 @@ mongoose.connection.on('connected', () => {
     console.log(`Connected to MongoDB ${mongoose.connection.name}`);
 });
 
-
+// Import the fruit model
+const Fruit = require('./models/fruit.js');
 
 
 // GET /
