@@ -18,6 +18,9 @@ mongoose.connection.on('connected', () => {
 // Import the fruit model
 const Fruit = require('./models/fruit.js');
 
+app.use(express.urlencoded({ extended: false }));
+
+
 
 // GET /
 app.get("/", async (req, res) => {
@@ -27,6 +30,17 @@ app.get("/", async (req, res) => {
 // GET /fruits/new
 app.get('/fruits/new', (req, res) => {
     res.render('fruits/new.ejs');
+});
+
+// POST /fruits
+app.post('/fruits', async (req, res) => {
+    if (req.body.isReadyToEat === 'on') {
+        req.body.isReadyToEat = true;
+    } else {
+        req.body.isReadyToEat = false;
+    }
+    await Fruit.create(req.body);
+  res.redirect("/fruits/new");
 });
 
 
