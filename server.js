@@ -55,13 +55,20 @@ app.post('/fruits', async (req, res) => {
         req.body.isReadyToEat = false;
     }
     await Fruit.create(req.body);
-  res.redirect("/fruits/new");
+  res.redirect("/fruits/");
 });
 
 // DELETE
 app.delete("/fruits/:fruitId", async (req, res) => {
   await Fruit.findByIdAndDelete(req.params.fruitId);
   res.redirect("/fruits");
+});
+
+app.get("/fruits/:fruitId/edit", async (req, res) => {
+  const foundFruit = await Fruit.findById(req.params.fruitId);
+  res.render("fruits/edit.ejs", {
+    fruit: foundFruit,
+  });
 });
 
 app.listen(3000, () => {
